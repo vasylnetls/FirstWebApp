@@ -1,0 +1,65 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    @if (Model.Responce != null)
+    {
+        <text>
+            <div class="@Model.Responce.ResultType.ToString().ToLower()-responce">
+                @Model.Responce.Message
+            </div>
+        </text>
+    }
+    
+    <form method="post">
+        <div class="container">
+            <div asp-validation-summary="All" style="color: red; font-weight: bold;"></div>
+
+            <h1>Current date: @DateTime.Now.Date</h1>
+
+            <label><b>Name</b></label>
+            <input type="text" asp-for="MyUser.Name">
+            <span asp-validation-for="MyUser.Name" class="text-danger"></span>
+            <hr/>
+            <label><b>Surname</b></label>
+            <input type="text" asp-for="MyUser.Surname">
+            <span asp-validation-for="MyUser.Surname" class="text-danger"></span>
+            <hr/>
+            <label><b>EMail</b></label>
+            <input type="email" asp-for="MyUser.Email">
+            <div class="loader"></div>
+            <span asp-validation-for="MyUser.Email" class="text-danger"></span>
+            <hr/>
+            <label><b>Age</b></label>
+            <input type="number" asp-for="MyUser.Age">
+            <span asp-validation-for="MyUser.Age" class="text-danger"></span>
+            <hr/>
+            <label><b>Description</b></label>
+            <input type="text" asp-for="MyUser.Description">
+            <span asp-validation-for="MyUser.Description" class="text-danger"></span>
+            <hr/>
+            <label><b>Password</b></label>
+            <input type="password" asp-for="MyUser.Password">
+            <span asp-validation-for="MyUser.Password" class="text-danger"></span>
+            <hr />
+            <label><b>Confirm password</b></label>
+            <input type="password" asp-for="MyUser.ConfirmPassword">
+            <span asp-validation-for="MyUser.Password" class="text-danger"></span>
+            <hr />
+            
+
+            <button type="submit">Login</button>
+            <label>
+                <input type="checkbox" checked="checked" name="remember"> Remember me
+            </label>
+        </div>
+    </form>
+</div> 
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial"/>
+}

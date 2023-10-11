@@ -1,0 +1,31 @@
+﻿@page
+@model WebApplication1.Pages.UsersModel
+@{
+    ViewData["Title"] = "Users";
+}
+
+<link rel="stylesheet" href="~/css/users.css" asp-append-version="true" />
+
+<div class="user-container">
+    <table>
+        <tr class="users-header">
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Email</th>
+            <th>Age</th>
+            <th>Description</th>
+            <th>CreateDate</th>
+        </tr>
+        @foreach (var user in Model.Users)
+        {
+            <tr class="user-row">
+                <td>@user.Name</td>
+                <td>@user.Surname</td>
+                <td>@user.Email</td>
+                <td>@user.Age</td>
+                <td>@user.Description</td>
+                <td>@user.CreateDate</td>
+            </tr>
+        }
+    </table>
+</div>

@@ -1,0 +1,17 @@
+﻿body {
+}
+
+table {
+    margin: 0 auto;
+}
+
+.users-container {
+    
+}
+
+.users-header {
+}
+
+.user-row:nth-child(2n) {
+    background-color: lightgray;
+}
