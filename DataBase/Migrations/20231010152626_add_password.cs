@@ -12,10 +12,10 @@ namespace DataBase.Migrations
         {
             migrationBuilder.DropPrimaryKey(
                 name: "PK_User",
-                table: "User");
+                table: "IUser");
 
             migrationBuilder.RenameTable(
-                name: "User",
+                name: "IUser",
                 newName: "Users");
 
             migrationBuilder.AddColumn<string>(
@@ -44,11 +44,11 @@ namespace DataBase.Migrations
 
             migrationBuilder.RenameTable(
                 name: "Users",
-                newName: "User");
+                newName: "IUser");
 
             migrationBuilder.AddPrimaryKey(
                 name: "PK_User",
-                table: "User",
+                table: "IUser",
                 column: "Id");
         }
     }

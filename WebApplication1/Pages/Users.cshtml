@@ -15,16 +15,24 @@
             <th>Age</th>
             <th>Description</th>
             <th>CreateDate</th>
+            <th>LastUpdate</th>
+            <th>Address</th>
         </tr>
         @foreach (var user in Model.Users)
         {
             <tr class="user-row">
                 <td>@user.Name</td>
                 <td>@user.Surname</td>
-                <td>@user.Email</td>
-                <td>@user.Age</td>
+                <td><i>@user.Email</i></td>
+                <td class="td-number">@user.Age</td>
                 <td>@user.Description</td>
                 <td>@user.CreateDate</td>
+                <td class="td-number">
+                    @(user.UpdateDate.HasValue ? (DateTime.Now - user.UpdateDate.Value).Days + " days ago" : string.Empty)
+                </td>
+                <td>
+                    @(user.Address == null ? string.Empty : $"{user.Address.City}, {user.Address.Street}, {user.Address.Index}")
+                </td>
             </tr>
         }
     </table>

@@ -13,14 +13,14 @@ namespace DataBase.Migrations
         {
             migrationBuilder.AddColumn<DateTime>(
                 name: "CreateDate",
-                table: "User",
+                table: "IUser",
                 type: "datetime2",
                 nullable: false,
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
             migrationBuilder.AddColumn<DateTime>(
                 name: "UpdateDate",
-                table: "User",
+                table: "IUser",
                 type: "datetime2",
                 nullable: false,
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
@@ -31,11 +31,11 @@ namespace DataBase.Migrations
         {
             migrationBuilder.DropColumn(
                 name: "CreateDate",
-                table: "User");
+                table: "IUser");
 
             migrationBuilder.DropColumn(
                 name: "UpdateDate",
-                table: "User");
+                table: "IUser");
         }
     }
 }

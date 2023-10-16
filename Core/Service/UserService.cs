@@ -19,12 +19,12 @@ namespace Core.Service
             _userRepository = userRepository;
         }
 
-        public IUser? GetUserById(Guid id)
+        public Interfaces.IUser? GetUserById(Guid id)
         {
             return _userRepository.GetUserById(id);
         }
 
-        public bool CreateUser(IUser user)
+        public bool CreateUser(Interfaces.IUser user)
         {
             user.Id = Guid.NewGuid();
             user.CreateDate = DateTime.Now;
@@ -37,7 +37,7 @@ namespace Core.Service
             return _userRepository.GetUserByEmail(email) != null;
         }
 
-        public List<User> GetUsers()
+        public List<IUser> GetUsers()
         {
             return _userRepository.GetUsers();
         }

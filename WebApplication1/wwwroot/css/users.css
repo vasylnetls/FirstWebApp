@@ -15,3 +15,17 @@ table {
 .user-row:nth-child(2n) {
     background-color: lightgray;
 }
+
+td:not(:last-child) {
+    border-right: 1px solid gray;
+    padding-right: 5px;
+}
+
+th {
+    border: 1px solid gray;
+    padding: 3px;
+}
+
+.td-number {
+    text-align: center;
+}

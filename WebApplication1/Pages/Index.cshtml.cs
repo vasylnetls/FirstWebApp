@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Net;
 using Azure;
 using Core.Interfaces;
@@ -7,6 +8,7 @@ using Core.Interfaces.Service;
 using Core.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Address = Core.Entities.Address;
 
 namespace WebApplication1.Pages
 {
@@ -30,6 +32,7 @@ namespace WebApplication1.Pages
             [DataType(DataType.EmailAddress)]
             [Display(Name = "Email", Prompt = "Enter your email")]
             public string Email { get; set; }
+            public Address? Address { get; set; }
             [Required]
             [Range(18, 99)]
             [Display(Name = "Age", Prompt = "Enter your age")]
@@ -98,21 +101,27 @@ namespace WebApplication1.Pages
                     Age = MyUser.Age,
                     Email = MyUser.Email,
                     Description = MyUser.Description,
-                    Password = MyUser.Password
+                    Password = MyUser.Password,
+                    Address = MyUser.Address
                 };
                 if (_userService.CreateUser(user))
                 {
-                    Responce = new Result() { ResultType = ResultType.Success, Message = $"User {MyUser.Name} has been created" };
+                    Responce = new Result() { ResultType = ResultType.Success, Message = $"IUser {MyUser.Name} has been created" };
                 }
                 else
                 {
-                    Responce = new Result() { ResultType = ResultType.Error, Message = $"User {MyUser.Name} has not been created" };
+                    Responce = new Result() { ResultType = ResultType.Error, Message = $"IUser {MyUser.Name} has not been created" };
                 }
             }
             else
             {
-                Responce = new Result() { ResultType = ResultType.Error, Message = "User has not been created" };
+                Responce = new Result() { ResultType = ResultType.Error, Message = "IUser has not been created" };
             }
+        }
+
+        public IActionResult OnPostCheckEmail(string email)
+        {
+            return new JsonResult(_userService.IsUsedEmail(email));
         }
 
     }

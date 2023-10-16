@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Interfaces;
@@ -13,6 +14,7 @@ namespace Core.Entities
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
+        public Address? Address { get; set; }
         public int Age { get; set; }
         public string Description { get; set; }
         public DateTime CreateDate { get; set; }
