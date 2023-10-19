@@ -1,0 +1,52 @@
+﻿form input[type=text] {
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid grey;
+    background: #f1f1f1;
+}
+
+/* Style the submit button */
+form button {
+    padding: 10px;
+    width: 50px;
+    background: #2196F3;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: none; /* Prevent double borders */
+    cursor: pointer;
+}
+
+form.example button:hover {
+    background: #0b7dda;
+}
+
+.user-row a {
+    color: inherit; /* blue colors for links too */
+    text-decoration: inherit; /* no underline */
+}
+
+.user-row a:hover {
+    color: #FFF;
+    background-color: #002F34;
+}
+
+.search-container {
+    display: flex;
+    padding-bottom: 10px;
+}
+
+.search-field {
+    margin-left: auto;
+    /*border: 1px solid gray;*/
+}
+
+.search-field:focus {
+    outline: none;
+}
+
+.user-container table {
+    width: 100%;
+}
+
+

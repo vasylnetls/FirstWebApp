@@ -40,3 +40,21 @@ body > div > main > div > form > div > div > ul {
         transform: rotate(360deg);
     }
 }
+
+.users-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
+}
+
+.container-item {
+    display: flex;
+    justify-content: flex-end; 
+    width: 350px;
+    padding: 5px 0;
+}
+
+.container-item label {
+    padding-right: 5px;
+}

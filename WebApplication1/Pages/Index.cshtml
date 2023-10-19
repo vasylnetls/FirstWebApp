@@ -13,52 +13,67 @@
             </div>
         </text>
     }
-    
+
     <form method="post">
-        <div class="container">
+        <div class="users-container">
             <div asp-validation-summary="All" style="color: red; font-weight: bold;"></div>
+            <div class="container-item">
+                <label>
+                    <b>Name</b>
+                </label>
+                <input type="text" asp-for="MyUser.Name">
+            </div>
+            <div class="container-item">
+                <label>
+                    <b>Surname</b>
+                </label>
+                <input type="text" asp-for="MyUser.Surname">
+            </div>
+            <div class="container-item">
+                <label>
+                    <b>EMail</b>
+                </label>
+                <input asp-for="MyUser.Email" id="author-email-id" oninput="ChangeEmail(event)"/>
+                <span class="loader d-none" id="email-loader"></span>
+                <span class="d-none field-validation-error" id="email-loader-error">This email is used</span>
+                <span asp-validation-for="MyUser.Email" class="text-danger"></span>
+            </div>
+            <div class="container-item">
+                <label>
+                    <b>Age</b>
+                </label>
+                <input type="number" asp-for="MyUser.Age">
+            </div>
+            <div class="container-item">
+                <label>
+                    <b>Description</b>
+                </label>
+                <input type="text" asp-for="MyUser.Description">
+            </div>
+            <div class="container-item">
+                <label>
+                    <b>Password</b>
+                </label>
+                <input type="password" asp-for="MyUser.Password">
+            </div>
+            <div class="container-item">
+                <label>
+                    <b>Confirm password</b>
+                </label>
+                <input type="password" asp-for="MyUser.ConfirmPassword">
+            </div>
+            <div class="container-iteam">
+                <button type="submit">Login</button>
+            </div>
+            <div class="container-iteam">
+                <label>
+                    <input type="checkbox" checked="checked" name="remember"> Remember me
+                </label>
+            </div>
 
-            <h1>Current date: @DateTime.Now.Date</h1>
-
-            <label><b>Name</b></label>
-            <input type="text" asp-for="MyUser.Name">
-            <span asp-validation-for="MyUser.Name" class="text-danger"></span>
-            <hr/>
-            <label><b>Surname</b></label>
-            <input type="text" asp-for="MyUser.Surname">
-            <span asp-validation-for="MyUser.Surname" class="text-danger"></span>
-            <hr/>
-            <label><b>EMail</b></label>
-            <input asp-for="MyUser.Email" id="author-email-id" oninput="ChangeEmail(event)" />
-            <span class="loader d-none" id="email-loader"></span>
-            <span class="d-none field-validation-error" id="email-loader-error">This email is used</span>
-            <span asp-validation-for="MyUser.Email" class="text-danger"></span>
-            <hr/>
-            <label><b>Age</b></label>
-            <input type="number" asp-for="MyUser.Age">
-            <span asp-validation-for="MyUser.Age" class="text-danger"></span>
-            <hr/>
-            <label><b>Description</b></label>
-            <input type="text" asp-for="MyUser.Description">
-            <span asp-validation-for="MyUser.Description" class="text-danger"></span>
-            <hr/>
-            <label><b>Password</b></label>
-            <input type="password" asp-for="MyUser.Password">
-            <span asp-validation-for="MyUser.Password" class="text-danger"></span>
-            <hr />
-            <label><b>Confirm password</b></label>
-            <input type="password" asp-for="MyUser.ConfirmPassword">
-            <span asp-validation-for="MyUser.Password" class="text-danger"></span>
-            <hr />
-            
-
-            <button type="submit">Login</button>
-            <label>
-                <input type="checkbox" checked="checked" name="remember"> Remember me
-            </label>
         </div>
     </form>
-</div> 
+</div>
 
 @section Scripts
 {
@@ -119,4 +134,3 @@
     }
 
 </script>
-

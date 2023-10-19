@@ -1,0 +1,29 @@
+﻿@media (min-width: 576px) {
+    .carousel-item img {
+        width: auto !important;
+        height: 400px;
+        max-height: 400px;
+    }
+}
+
+body {
+}
+
+.product_flex-container {
+    display: flex;
+    border: 2px solid gray;
+    border-radius: 10px;
+    padding: 30px 10px 20px;
+    background-color: lightgray;
+    -webkit-box-shadow: 11px 10px 28px 0px rgba(0,0,0,0.68);
+    -moz-box-shadow: 11px 10px 28px 0px rgba(0,0,0,0.68);
+    box-shadow: 11px 10px 28px 0px rgba(0,0,0,0.68);
+}
+
+.product_flex-item {
+    flex-grow: 1;
+}
+
+.carouselExampleControls img {
+    
+}

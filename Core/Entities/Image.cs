@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
-    public class Address : IAddress
+    internal class Image : IImage
     {
         public int Id { get; set; }
-        public string? City { get; set; }
-        public string? Street { get; set; }
-        public string? Index { get; set; }
+        public string Name { get; set; }
+        public byte[]? Data { get; set; }
+        public DateTime UpdateDate { get; set; }
     }
 }

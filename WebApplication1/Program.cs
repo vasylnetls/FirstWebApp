@@ -11,7 +11,6 @@ namespace WebApplication1
     {
         public static void Main(string[] args)
         {
-
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
@@ -23,9 +22,14 @@ namespace WebApplication1
 
             builder.Services.AddTransient<IUserRepository, UserRepository>();
             builder.Services.AddTransient<IUserService, UserService>();
+            builder.Services.AddTransient<IProductRepository, ProductRepository>();
+            builder.Services.AddTransient<IProductService, ProductService>();
+            builder.Services.AddTransient<IImageRepository, ImageRepository>();
+            builder.Services.AddTransient<IImageService, ImageService>();
+
+            builder.Services.AddMemoryCache();
 
             var app = builder.Build();
-
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -36,6 +40,7 @@ namespace WebApplication1
             }
 
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseRouting();

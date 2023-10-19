@@ -1,0 +1,66 @@
+﻿@page
+@model WebApplication1.Pages.ProductsModel
+@{
+    ViewData["Title"] = "Products";
+}
+
+<link rel="stylesheet" href="~/css/users.css" asp-append-version="true"/>
+<link rel="stylesheet" href="~/css/products.css" asp-append-version="true"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<form class="search-container">
+    @* <span asp-validation-for="SearchString"></span> *@
+    <input class="search-field" asp-for="SearchString" minlength="3" type="text" placeholder="Search..">
+    @* <input type="submit" value="Filter"/> *@
+    <button type="submit">
+        <i class="fa fa-search"></i>
+    </button>
+</form>
+<div class="user-container">
+    <table>
+        <tr class="users-header">
+            <th>Title</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Discount</th>
+            <th>Rating</th>
+            <th>Stock</th>
+            <th>Brand</th>
+            <th>Category</th>
+            <th>Thumbnail</th>
+            <th>Images</th>
+        </tr>
+
+        @foreach (var product in Model.Products)
+        {
+            <tr class="user-row">
+                <td><a asp-page="/Product" asp-route-id="@product.Id" >@product.Title</a></td>
+                <td style="width: 260px;">
+                    <p style="width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="@product.Description">
+                        @product.Description
+                    </p>
+                </td>
+                <td>@product.Price</td>
+                <td>@product.DiscountPercentage</td>
+                <td>@product.Rating</td>
+                <td>@product.Stock</td>
+                <td>@product.Brand</td>
+                <td>@product.Category</td>
+                <td>
+                    <img src="/image/@product.Id/@product.Thumbnail.Split('/').Last()" style="width: 100px" alt=""/>
+                </td>
+                <td>
+                    @* @foreach (var image in product.Images)
+                    {
+                        <img style="width: 70px" src="@image" alt="@image">
+                    } *@
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+@* 
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial"/>
+} *@

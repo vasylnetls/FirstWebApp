@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataBase.Models
 {
-    public class Address
+    internal class Address
     {
         [Key]
         public int Id { get; set; }

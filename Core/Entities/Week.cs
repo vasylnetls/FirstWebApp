@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
-    public class Week
+    public class Week : IWeek
     {
         public Dictionary<Langs, List<Day>> DaysDictionary;
 
