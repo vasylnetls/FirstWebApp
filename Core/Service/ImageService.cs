@@ -1,21 +1,18 @@
-﻿using Core.Interfaces.Repository;
+﻿using Core.Entities;
+using Core.Interfaces.Repository;
 using Core.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Core.Entities;
-using static System.Net.Mime.MediaTypeNames;
+using Microsoft.Extensions.Options;
 
 namespace Core.Service
 {
     public class ImageService : IImageService
     {
         private readonly IImageRepository _imageRepository;
+        private readonly AppConf _options;
 
-        public ImageService(IImageRepository imageRepository)
+        public ImageService(IImageRepository imageRepository, IOptions<AppConf> options)
         {
+            _options = options.Value;
             _imageRepository = imageRepository;
         }
 
@@ -30,47 +27,39 @@ namespace Core.Service
                     return ImageCache.GetImages(imageName);
                 }
 
-                if (IsImageInBase(imageName, out var dbImage))
+                if (!IsImageInBase(imageName, out var dbImage))
+                    return await UpdateImage(_imageRepository.CreateImage, id, name, Array.Empty<byte>());
+                if (DateTime.Now - dbImage.UpdateDate > _options.ElapsedTime)
                 {
-                    if (DateTime.Now - dbImage.UpdateDate > TimeSpan.FromMinutes(5))
-                    {
-                        var bytes = await GetImageFromSite(id, name);
-                        if (bytes.Length > 0)
-                        {
-                            ImageCache.AddImage(imageName, bytes);
-                            _imageRepository.UpdateImage(new Entities.Image()
-                            {
-                                Name = imageName,
-                                Data = bytes,
-                                UpdateDate = DateTime.Now
-                            });
-                            
-                            return bytes;
-                        }
-                    }
-                    else
-                    {
-                        ImageCache.AddImage(imageName, dbImage.Data);
-                        return dbImage.Data;
-                    }
+                    return await UpdateImage(_imageRepository.UpdateImage, id, name, dbImage.Data);
                 }
-                else
-                { 
-                    var bytes = await GetImageFromSite(id, name);
-                    ImageCache.AddImage(imageName, bytes);
-                    _imageRepository.CreateImage(new Entities.Image()
-                    {
-                        Name = imageName,
-                        Data = bytes,
-                        UpdateDate = DateTime.Now
-                    });
-                    
-                    return bytes;
-                }
+
+                ImageCache.AddImage(imageName, dbImage, _options.ElapsedCacheTime);
+                return dbImage.Data;
             }
 
             return Array.Empty<byte>();
         }
+
+        private async Task<byte[]> UpdateImage(Func<IImage, bool> func, int? id, string? name, byte[]? defaultData)
+        {
+            var imageBytes = await GetImageFromSite(id, name);
+            if (imageBytes.Length <= 0) return defaultData;
+
+            var imageName = GetImageName(id, name);
+            var image = new Image()
+            {
+                Data = imageBytes,
+                Name = imageName,
+                UpdateDate = DateTime.Now
+            };
+            ImageCache.AddImage(imageName, image, _options.ElapsedCacheTime);
+            func(image);
+
+            return imageBytes;
+        }
+
+        private string GetImageName(int? id, string? name) => id + "_image_" + name;
 
         public bool IsImageInBase(string name, out IImage? dbImage)
         {
@@ -80,20 +69,20 @@ namespace Core.Service
 
         public async Task<byte[]> GetImageFromSite(int? id, string? name)
         {
-            using HttpClient client = new HttpClient();
+            using var client = new HttpClient();
 
             try
             {
                 using var response = await client.GetAsync($"https://i.dummyjson.com/data/products/{id}/{name}");
 
-                if (response != null && response.IsSuccessStatusCode)
+                if (response is { IsSuccessStatusCode: true })
                 {
                     return await response.Content.ReadAsByteArrayAsync();
                 }
             }
             catch (Exception ex)
             {
-
+                Console.WriteLine(ex.Message);
             }
 
             return Array.Empty<byte>();

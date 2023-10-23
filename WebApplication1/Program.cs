@@ -1,9 +1,9 @@
+using Core.Entities;
 using Core.Interfaces.Repository;
 using Core.Interfaces.Service;
 using Core.Service;
 using Microsoft.EntityFrameworkCore;
 using DataBase;
-
 
 namespace WebApplication1
 {
@@ -28,6 +28,8 @@ namespace WebApplication1
             builder.Services.AddTransient<IImageService, ImageService>();
 
             builder.Services.AddMemoryCache();
+
+            builder.Services.Configure<AppConf>(builder.Configuration.GetSection("AppConf"));
 
             var app = builder.Build();
 
