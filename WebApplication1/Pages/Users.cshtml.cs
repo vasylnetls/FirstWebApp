@@ -9,7 +9,7 @@ namespace WebApplication1.Pages
     public class UsersModel : PageModel
     {
         private readonly IUserService _userService;
-        public List<IUser> Users { get; set; }
+        public List<IUser?> Users { get; set; }
         public UsersModel(IUserService userService)
         {
             _userService = userService;

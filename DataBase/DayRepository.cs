@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Enums;
+using Core.Interfaces.Repository;
 
 namespace DataBase
 {
@@ -16,19 +17,11 @@ namespace DataBase
             _dbContext = dbContext;
         }
 
-        public IEnumerable<KeyValuePair<WeekDay, string>> GetDaysByLanguage(Langs lang)
+        public IEnumerable<KeyValuePair<WeekDay, string?>> GetDaysByLanguage(Langs lang)
         {
             var days = _dbContext.Days;
 
-            var dictionary = new Dictionary<WeekDay, string>();
-            foreach (var day in days)
-            {
-                if (day.Lang == lang)
-                {
-                    dictionary.Add(day.WeekDay, day.Value);
-                }
-            }
-            return dictionary;
+            return days.Where(day => day.Lang == lang).ToDictionary(day => day.WeekDay, day => day.Value);
         }
     }
 }

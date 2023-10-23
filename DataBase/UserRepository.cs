@@ -23,15 +23,7 @@ namespace DataBase
         {
             var users = _dbContext.Users;
 
-            foreach (var user in users)
-            {
-                if (user.Id == id)
-                {
-                    return CastToIUser(user);
-                }
-            }
-
-            return null;
+            return CastToIUser(users.FirstOrDefault(user => user.Id == id));
         }
 
         public bool CreateUser(IUser user)
@@ -78,21 +70,14 @@ namespace DataBase
         {
             var users = _dbContext.Users;
 
-            foreach (var user in users)
-            {
-                if (user.Email == email)
-                {
-                    return CastToIUser(user);
-                }
-            }
+            return CastToIUser(users.FirstOrDefault(user => user.Email == email));
 
-            return null;
         }
 
-        public List<IUser> GetUsers()
+        public List<IUser?> GetUsers()
         {
             var users = _dbContext.Users.Include(x => x.Address);
-            List<IUser> usersList = new List<IUser>();
+            var usersList = new List<IUser>();
 
             foreach (var user in users)
             {

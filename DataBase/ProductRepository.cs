@@ -23,25 +23,23 @@ namespace DataBase
 
         public async Task<IEnumerable<Product>> GetAllProductAsync()
         {
-            if (!_memoryCache.TryGetValue(productKey, out IEnumerable<Product>? data))
+            if (_memoryCache.TryGetValue(productKey, out IEnumerable<Product>? data)) return data;
+            using var client = new HttpClient();
+            using var response = await client.GetAsync("https://dummyjson.com/products?limit=100");
+
+            var str = await response.Content.ReadAsStringAsync();
+
+            var result = JsonSerializer.Deserialize<ProductDb>(str, new JsonSerializerOptions
             {
-                using var client = new HttpClient();
-                using HttpResponseMessage response = await client.GetAsync("https://dummyjson.com/products?limit=100");
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            });
 
-                var str = await response.Content.ReadAsStringAsync();
+            data = result?.Products;
 
-                var result = JsonSerializer.Deserialize<ProductDb>(str, new JsonSerializerOptions
-                {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                });
-
-                data = result?.Products;
-
-                _memoryCache.Set(productKey, data, new MemoryCacheEntryOptions
-                {
-                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5)
-                });
-            }
+            _memoryCache.Set(productKey, data, new MemoryCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5)
+            });
 
             return data;
         }

@@ -37,7 +37,7 @@ namespace Core.Service
             return _userRepository.GetUserByEmail(email) != null;
         }
 
-        public List<IUser> GetUsers()
+        public List<IUser?> GetUsers()
         {
             return _userRepository.GetUsers();
         }

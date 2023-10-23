@@ -45,15 +45,11 @@ namespace DataBase
             {
                 var dbImage = _dbContext.Images.FirstOrDefault(x => x.Name == image.Name);
 
-                if (dbImage != null)
-                {
-                    dbImage.Data = image.Data;
-                    dbImage.UpdateDate = image.UpdateDate;
-                    _dbContext.SaveChanges();
-                    return true;
-                }
-
-                return false;
+                if (dbImage == null) return false;
+                dbImage.Data = image.Data;
+                dbImage.UpdateDate = image.UpdateDate;
+                _dbContext.SaveChanges();
+                return true;
             }
             catch (Exception e)
             {
@@ -65,14 +61,8 @@ namespace DataBase
         public List<IImage> GetImages()
         {
             var images = _dbContext.Images;
-            List<IImage> imagesList = new List<IImage>();
 
-            foreach (var image in images)
-            {
-                imagesList.Add(image);
-            }
-
-            return imagesList;
+            return Enumerable.Cast<IImage>(images).ToList();
         }
 
         public IImage? GetImageByName(string name)
