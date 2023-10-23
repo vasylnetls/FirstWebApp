@@ -76,15 +76,9 @@ namespace DataBase
 
         public List<IUser?> GetUsers()
         {
-            var users = _dbContext.Users.Include(x => x.Address);
-            var usersList = new List<IUser>();
+            var users = _dbContext.Users.Include(x => x.Address).ToList();
 
-            foreach (var user in users)
-            {
-                usersList.Add(CastToIUser(user));
-            }
-
-            return usersList;
+            return users.Select(CastToIUser).ToList();
         }
 
         private Address? GetAddress(Models.Address? address)

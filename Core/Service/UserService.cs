@@ -19,7 +19,7 @@ namespace Core.Service
             _userRepository = userRepository;
         }
 
-        public Interfaces.IUser? GetUserById(Guid id)
+        public IUser? GetUserById(Guid id)
         {
             return _userRepository.GetUserById(id);
         }
