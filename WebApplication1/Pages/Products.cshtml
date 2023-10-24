@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="~/css/products.css" asp-append-version="true"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+
 <form class="search-container">
     @* <span asp-validation-for="SearchString"></span> *@
     <input class="search-field" asp-for="SearchString" minlength="3" type="text" placeholder="Search..">
@@ -17,7 +18,8 @@
     </button>
 </form>
 <div class="user-container">
-    <table>
+    <table id="myTable">
+        <thead>
         <tr class="users-header">
             <th>Title</th>
             <th>Description</th>
@@ -30,11 +32,14 @@
             <th>Thumbnail</th>
             <th>Images</th>
         </tr>
-
+        </thead>
+        <tbody>
         @foreach (var product in Model.Products)
         {
             <tr class="user-row">
-                <td><a asp-page="/Product" asp-route-id="@product.Id" >@product.Title</a></td>
+                <td>
+                    <a asp-page="/Product" asp-route-id="@product.Id">@product.Title</a>
+                </td>
                 <td style="width: 260px;">
                     <p style="width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="@product.Description">
                         @product.Description
@@ -52,14 +57,26 @@
                 <td>
                     @* @foreach (var image in product.Images)
                     {
-                        <img style="width: 70px" src="@image" alt="@image">
+                    <img style="width: 70px" src="@image" alt="@image">
                     } *@
                 </td>
             </tr>
         }
+        </tbody>
     </table>
 </div>
-@* 
+
+@section Scripts
+{
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+    <script type="text/javascript">
+
+        new DataTable('#myTable');
+
+    </script>
+}
+
+@*
 @section Scripts
 {
     <partial name="_ValidationScriptsPartial"/>

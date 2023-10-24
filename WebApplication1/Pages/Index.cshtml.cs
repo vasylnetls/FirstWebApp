@@ -8,53 +8,17 @@ using Core.Interfaces.Service;
 using Core.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using WebApplication1.PageModels;
 using Address = Core.Entities.Address;
 
 namespace WebApplication1.Pages
 {
     public class IndexModel : PageModel
     {
-        public class User : IUser
-        {
-            [HiddenInput]
-            public Guid Id { get; set; }
-            [Required]
-            [MinLength(3)]
-            [StringLength(50)]
-            [Display(Name = "Name", Prompt = "Enter your name")]
-            public string Name { get; set; }
-            [Required]
-            [MinLength(3)]
-            [StringLength(50)]
-            [Display(Name = "Surname", Prompt = "Enter your surname")]
-            public string Surname { get; set; }
-            [Required]
-            [DataType(DataType.EmailAddress)]
-            [Display(Name = "Email", Prompt = "Enter your email")]
-            public string Email { get; set; }
-            public Address? Address { get; set; }
-            [Required]
-            [Range(18, 99)]
-            [Display(Name = "Age", Prompt = "Enter your age")]
-            public int Age { get; set; }
-            [Display(Name = "Description", Prompt = "Enter your description")]
-            public string? Description { get; set; }
-            public DateTime CreateDate { get; set; }
-            public DateTime? UpdateDate { get; set; }
-            [Required]
-            [MaxLength(16)]
-            [DataType(DataType.Password)]
-            [Display(Name = "Password", Prompt = "Enter your password")]
-            public string Password { get; set; }
-            [Required]
-            [DataType(DataType.Password)]
-            [Compare("Password", ErrorMessage = "Passwords must be equal")]
-            [Display(Name = "Confirm Password", Prompt = "Confirm your password")]
-            public string ConfirmPassword { get; set; }
-        }
+        
 
         [BindProperty]
-        public User MyUser { get; set; }
+        public UserModel MyUser { get; set; }
 
         private readonly IUserService _userService;
 
@@ -94,7 +58,7 @@ namespace WebApplication1.Pages
             }
             if (MyUser != null)
             {
-                var user = new User()
+                var user = new UserModel()
                 {
                     Name = MyUser.Name,
                     Surname = MyUser.Surname,

@@ -21,7 +21,7 @@ namespace DataBase
 
         public IUser? GetUserById(Guid id)
         {
-            var users = _dbContext.Users;
+            var users = _dbContext.Users.Include(x => x.Address);
 
             return CastToIUser(users.FirstOrDefault(user => user.Id == id));
         }
@@ -64,6 +64,48 @@ namespace DataBase
                 Console.WriteLine(e.ToString());
                 return false;
             }
+        }
+
+        public bool UpdateUser(IUser user)
+        {
+            try
+            {
+                var dbUser = _dbContext.Users.FirstOrDefault(x => x.Id == user.Id);
+                if (dbUser == null)
+                {
+                    return false;
+                }
+                dbUser.Name = user.Name;
+                dbUser.Age = user.Age;
+                dbUser.UpdateDate = DateTime.Now;
+                //dbUser.Password = user.Password;
+                if (user.Address != null)
+                {
+                    var dbAddress = _dbContext.Addresses.FirstOrDefault(x => x.Id == user.Address.Id);
+                    if (dbAddress != null && dbAddress.Id != 0)
+                    {
+                        dbAddress.Street = user.Address.Street;
+                        dbAddress.City = user.Address.City;
+                        dbAddress.Index = user.Address.Index;
+                    }
+                    else
+                    {
+                        dbUser.Address = new Models.Address
+                        {
+                            Street = user.Address.Street,
+                            City = user.Address.City,
+                            Index = user.Address.Index,
+                        };
+                    }
+                }
+
+                _dbContext.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
         }
 
         public IUser? GetUserByEmail(string email)

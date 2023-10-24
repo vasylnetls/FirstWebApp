@@ -22,7 +22,7 @@ namespace WebApplication1.Pages
         {
             var product = await _productService.GetProductById(Id);
 
-            MyProduct = product ??= new Product()
+            MyProduct = product ?? new Product()
             {
                 Id = 0,
                 Title = string.Empty,

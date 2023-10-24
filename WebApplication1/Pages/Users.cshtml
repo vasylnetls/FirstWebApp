@@ -4,10 +4,30 @@
     ViewData["Title"] = "Users";
 }
 
-<link rel="stylesheet" href="~/css/users.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/users.css" asp-append-version="true"/>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="user-container">
-    <table>
+    <table id="myTable">
+        <thead>
         <tr class="users-header">
             <th>Name</th>
             <th>Surname</th>
@@ -18,22 +38,44 @@
             <th>LastUpdate</th>
             <th>Address</th>
         </tr>
+        <thead>
+        <tbody>
         @foreach (var user in Model.Users)
         {
-            <tr class="user-row">
-                <td>@user.Name</td>
+                <tr class="user-row" ondblclick="location.href = '@(Url.Page("UserEdit", new { id = user.Id }))'">
+                <td onclick="showEditDialog()">@user.Name</td>
                 <td>@user.Surname</td>
-                <td><i>@user.Email</i></td>
+                <td>
+                    <i>@user.Email</i>
+                </td>
                 <td class="td-number">@user.Age</td>
                 <td>@user.Description</td>
                 <td>@user.CreateDate</td>
                 <td class="td-number">
-                    @(user.UpdateDate.HasValue ? (DateTime.Now - user.UpdateDate.Value).Days + " days ago" : string.Empty)
+                                @(user.UpdateDate.HasValue ? ((DateTime.Now - user.UpdateDate.Value).Days != 0) ? (DateTime.Now - user.UpdateDate.Value).Days + " days ago" : "today" : string.Empty)
                 </td>
                 <td>
                     @(user.Address == null ? string.Empty : $"{user.Address.City}, {user.Address.Street}, {user.Address.Index}")
                 </td>
             </tr>
         }
+        </tbody>
     </table>
 </div>
+
+@section Scripts
+{
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+    <script type="text/javascript">
+
+        new DataTable('#myTable');
+        function showEditDialog() {
+            var myModal = new bootstrap.Modal(document.getElementById('myModal'), {
+                keyboard: true
+            });
+            myModal.show();
+
+        }
+
+    </script>
+}

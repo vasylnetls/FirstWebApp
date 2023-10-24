@@ -16,6 +16,12 @@ table {
     background-color: lightgray;
 }
 
+.user-row:hover {
+    background-color: #002F34;
+    color: #FFF;
+    cursor: pointer;
+}
+
 td:not(:last-child) {
     border-right: 1px solid gray;
     padding-right: 5px;

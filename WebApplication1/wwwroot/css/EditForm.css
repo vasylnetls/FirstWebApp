@@ -9,7 +9,8 @@
 body {
 }
 
-.product_flex-container {
+.product_flex-container,
+.user_flex-container {
     display: flex;
     border: 2px solid gray;
     border-radius: 10px;
@@ -20,10 +21,18 @@ body {
     box-shadow: 11px 10px 28px 0px rgba(0,0,0,0.68);
 }
 
-.product_flex-item {
+.edit-form__container {
+    border: 2px solid gray;
+    border-radius: 10px;
+    padding: 30px 10px 20px;
+    background-color: lightgray;
+    -webkit-box-shadow: 11px 10px 28px 0px rgba(0,0,0,0.68);
+    -moz-box-shadow: 11px 10px 28px 0px rgba(0,0,0,0.68);
+    box-shadow: 11px 10px 28px 0px rgba(0,0,0,0.68);
+}
+
+.product_flex-item,
+.user_flex-item {
     flex-grow: 1;
 }
 
-.carouselExampleControls img {
-    
-}

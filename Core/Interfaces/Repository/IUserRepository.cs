@@ -6,6 +6,7 @@ namespace Core.Interfaces.Repository
     {
         IUser? GetUserById(Guid id);
         bool CreateUser(IUser user);
+        bool UpdateUser(IUser user);
         IUser? GetUserByEmail(string email);
         List<IUser?> GetUsers();
     }

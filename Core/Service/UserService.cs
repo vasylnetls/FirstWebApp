@@ -24,12 +24,17 @@ namespace Core.Service
             return _userRepository.GetUserById(id);
         }
 
-        public bool CreateUser(Interfaces.IUser user)
+        public bool CreateUser(IUser user)
         {
             user.Id = Guid.NewGuid();
             user.CreateDate = DateTime.Now;
 
             return _userRepository.CreateUser(user);
+        }
+
+        public bool UpdateUser(IUser user)
+        {
+            return _userRepository.UpdateUser(user);
         }
 
         public bool IsUsedEmail(string email)

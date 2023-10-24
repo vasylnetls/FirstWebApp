@@ -1,0 +1,88 @@
+﻿@page "{id}"
+@model WebApplication1.Pages.UserEditModel
+@{
+    ViewData["Title"] = "UserEdit";
+}
+
+<link rel="stylesheet" href="~/css/EditForm.css" asp-append-version="true" />
+
+<div class="modal fade bd-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="alert alert-success" style="margin-bottom: 0;" role="alert">
+                User edited successfully!
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="edit-form__container">
+    <form id="form1" method="post">
+        <input asp-for="MyUser.Id" />
+        <input asp-for="MyUser.Address.Id" />
+        <div class="form-group row">
+            <div class="form-group col-md-6">
+                <label asp-for="MyUser.Name"></label>
+                <input class="form-control"  type="text" asp-for="MyUser.Name" id="name">
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="MyUser.Surname"></label>
+                <input class="form-control"  type="text" asp-for="MyUser.Surname" id="surname">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="form-group col-md-6">
+                <label asp-for="MyUser.Email"></label>
+                <input class="form-control" type="text" asp-for="MyUser.Email" id="email" readonly>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="MyUser.Age"></label>
+                <input class="form-control" type="text" asp-for="MyUser.Age" id="age">
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="MyUser.Description"></label>
+            <input class="form-control" type="text" asp-for="MyUser.Description" id="description">
+        </div>
+        <div class="form-group row">
+            <div class="form-group col-md-6">
+                <label asp-for="MyUser.CreateDate"></label>
+                <input class="form-control" type="text" asp-for="MyUser.CreateDate" id="createDate">
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="MyUser.LastUpdate"></label>
+                <input class="form-control" asp-for="MyUser.LastUpdate" readonly>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="form-group col-md-6">
+                <label asp-for="MyUser.Address.City"></label>
+                <input class="form-control" type="text" asp-for="MyUser.Address.City" id="city">
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="MyUser.Address.Street"></label>
+                <input class="form-control" type="text" asp-for="MyUser.Address.Street" id="street">
+            </div>
+            <div class="form-group col-md-2">
+                <label asp-for="MyUser.Address.Index"></label>
+                <input class="form-control" type="text" asp-for="MyUser.Address.Index" id="index">
+            </div>
+        </div>
+        <br/>
+        <button type="button" onclick="window.location.href = '/Users'" class="btn btn-outline-danger">Back</button>
+        <button type="button" class="btn btn-outline-success" onclick="showDialog()" data-target=".bd-example-modal-sm">Save</button>
+    </form>
+
+</div>
+
+<script type="text/javascript">
+    const delay = ms => new Promise(res => setTimeout(res, ms));
+    async function showDialog()
+    {
+        $('#myModal').modal('show');
+        await delay(1000);
+        $('#myModal').modal('hide');
+        var f = document.getElementById('form1');
+        f.submit();
+    }
+</script>

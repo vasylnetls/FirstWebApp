@@ -6,6 +6,7 @@ public interface IUserService
 {
     IUser? GetUserById(Guid id);
     bool CreateUser(IUser user);
+    bool UpdateUser(IUser user);
     bool IsUsedEmail(string email);
     List<IUser?> GetUsers();
 }

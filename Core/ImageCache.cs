@@ -12,7 +12,7 @@ namespace Core
     {
         private static Dictionary<string, CacheElement<IImage>> images;
 
-        private static readonly object lockObj = new ();
+        private static readonly object lockObj = new();
 
         static ImageCache()
         {
@@ -29,17 +29,22 @@ namespace Core
             if (images.ContainsKey(key)) return;
             lock (lockObj)
             {
-                images.Add(key, new CacheElement<IImage> { Value = image, ElapsedTime = DateTime.Now.Add(elapsedTime)});
+                images.Add(key,
+                    new CacheElement<IImage> { Value = image, ElapsedTime = DateTime.Now.Add(elapsedTime) });
             }
         }
 
         public static bool IsImageDownload(string key)
         {
             if (!images.ContainsKey(key)) return false;
-            
+
             var cacheElement = images.GetValueOrDefault(key, null);
             if (DateTime.Now < cacheElement?.ElapsedTime) return true;
-            images.Remove(key);
+            lock (lockObj)
+            {
+                images.Remove(key);
+            }
+
             return false;
         }
 
